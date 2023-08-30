@@ -7,7 +7,7 @@
         body {
             margin: 0;
             padding: 0;
-            touch-action: none;
+            
         }
 
         #canvasContainer {
@@ -20,7 +20,7 @@
             top: 0;
             left: 0;
             z-index: 1;
-            
+
 
         }
 
@@ -87,10 +87,9 @@
 
         Events = ['touchstart', 'touchmove', 'touchend']
         isMobile = window.innerWidth <= 768
-        if (!isMobile) {
-            Events = ['mousedown', 'mousemove', 'mouseup']
-        }
-        console.log(Events)
+        // if (!isMobile) {
+        //     Events = ['mousedown', 'mousemove', 'mouseup']
+        // }
         function drawRadCircles(x, y, radious) {
             ctx.beginPath()
             ctx.arc(x, y, radious, 0, 2 * Math.PI);
@@ -114,7 +113,7 @@
 
 
 
-        canvas.addEventListener('touchstart', function (event) {
+        canvas.addEventListener(Events[0], function (event) {
             rect = canvas.getBoundingClientRect()
             event = event.touches[0]
             X = event.clientX - rect.left
@@ -123,7 +122,7 @@
                 circleCatched = true
             }
         })
-        canvas.addEventListener('touchmove', function (event) {
+        canvas.addEventListener(Events[1], function (event) {
             if (circleCatched) {
                 rect = canvas.getBoundingClientRect();
                 event = event.touches[0]
@@ -137,7 +136,7 @@
                 drawGeigerCounter()
             }
         })
-        canvas.addEventListener('touchend', function () {
+        canvas.addEventListener(Events[2], function () {
             circleCatched = false;
             angle = -0.5
             sound.pause()
