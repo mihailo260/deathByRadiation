@@ -89,7 +89,7 @@
         Events = []
 
         isMobile = window.innerWidth <= 768
-        if (!isMobile) {
+        if (isMobile) {
             Events = ['mousedown', 'mousemove', 'mouseup']
         } else {
             Events = ['touchstart', 'touchmove', 'touchend']
