@@ -7,7 +7,7 @@
         body {
             margin: 0;
             padding: 0;
-            
+
         }
 
         #canvasContainer {
@@ -86,17 +86,27 @@
         angle = -0.5
 
         Events = ['touchstart', 'touchmove', 'touchend']
-        isMobile = window.innerWidth <= 768
-        // if (!isMobile) {
+        // if (!window.innerWidth <= 768) {
         //     Events = ['mousedown', 'mousemove', 'mouseup']
         // }
-        function drawRadCircles(x, y, radious) {
-            ctx.beginPath()
-            ctx.arc(x, y, radious, 0, 2 * Math.PI);
-            ctx.fillStyle = "rgba(0, 200, 0, 0.3)";
-            ctx.fill();
-            ctx.closePath();
-        }
+
+        // worker = new Worker('optimize.js')
+        // worker.onmessage = function (event) {
+        //     offscreenCanvas = event.data;
+        //     context = offscreenCanvas.getContext('2d');
+        //     drawRAD(context)
+        //     const bitmap = offscreenCanvas.transferToImageBitmap();
+        //     const image = new Image();
+        //     image.src = URL.createObjectURL(bitmap);
+        //     document.body.appendChild(image);
+
+        // };
+        // worker.postMessage('start');
+        drawCircle(centerX, centerY)
+        drawGeigerCounter()
+        drawRAD(ctx)
+        
+
         function drawCircle(x, y) {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.beginPath();
@@ -106,13 +116,6 @@
             ctx.closePath();
 
         }
-        changeLine(angle)
-        drawCircle(centerX, centerY)
-        drawRAD()
-        drawGeigerCounter()
-
-
-
         canvas.addEventListener(Events[0], function (event) {
             rect = canvas.getBoundingClientRect()
             event = event.touches[0]
@@ -130,10 +133,9 @@
                 Y = event.clientY - rect.top
 
                 checkCollision(X, Y, radiusRad)
-                changeLine(angle)
                 drawCircle(X, Y)
-                drawRAD()
                 drawGeigerCounter()
+                drawRAD(ctx)
             }
         })
         canvas.addEventListener(Events[2], function () {
@@ -143,14 +145,19 @@
             drawCircle(centerX, centerY)
             health = 100
             updateHealthBar()
+            drawRAD(ctx)
             drawGeigerCounter()
-            changeLine(angle)
-            drawRAD()
         });
-        function drawRAD() {
+        function drawRAD(ctx) {
+            ctx.beginPath()
             for (let i = 0; i < radiusRad.length; i++) {
-                drawRadCircles(radX, radY, radiusRad[i])
+                
+                ctx.arc(radX, radY, radiusRad[i], 0, 2 * Math.PI);
+                ctx.fillStyle = "rgba(0, 200, 0, 0.3)";
+                ctx.fill();
+                
             }
+            ctx.closePath();
         }
         function drawGeigerCounter() {
             ctx.beginPath()
