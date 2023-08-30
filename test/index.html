@@ -87,7 +87,6 @@
         angle = -0.5
 
         Events = ['touchstart', 'touchmove', 'touchend']
-
         isMobile = window.innerWidth <= 768
         if (!isMobile) {
             Events = ['mousedown', 'mousemove', 'mouseup']
@@ -115,19 +114,24 @@
 
 
 
-        canvas.addEventListener(Events[0], function (event) {
+        canvas.addEventListener('touchstart', function (event) {
             rect = canvas.getBoundingClientRect()
-            event = event.touches[0]
+            // if (isMobile) {
+            //     event = event.touches[0]
+            // }
+
             X = event.clientX - rect.left
             Y = event.clientY - rect.top
             if (Math.sqrt((X - centerX) ** 2 + (Y - centerY) ** 2) <= radius) {
                 circleCatched = true
             }
         })
-        canvas.addEventListener(Events[1], function (event) {
+        canvas.addEventListener('touchmove', function (event) {
             if (circleCatched) {
                 rect = canvas.getBoundingClientRect();
-                event = event.touches[0]
+                // if (isMobile) {
+                //     event = event.touches[0]
+                // }
                 X = event.clientX - rect.left
                 Y = event.clientY - rect.top
 
@@ -138,7 +142,7 @@
                 drawGeigerCounter()
             }
         })
-        canvas.addEventListener(Events[2], function () {
+        canvas.addEventListener('touchend', function () {
             circleCatched = false;
             angle = -0.5
             sound.pause()
