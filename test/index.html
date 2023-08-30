@@ -91,6 +91,7 @@
         if (!isMobile) {
             Events = ['mousedown', 'mousemove', 'mouseup']
         }
+        console.log(Events)
         function drawRadCircles(x, y, radious) {
             ctx.beginPath()
             ctx.arc(x, y, radious, 0, 2 * Math.PI);
@@ -116,9 +117,7 @@
 
         canvas.addEventListener('touchstart', function (event) {
             rect = canvas.getBoundingClientRect()
-            if (isMobile) {
-                    event = event.touches[0]
-            }
+            event = event.touches[0]
             X = event.clientX - rect.left
             Y = event.clientY - rect.top
             if (Math.sqrt((X - centerX) ** 2 + (Y - centerY) ** 2) <= radius) {
@@ -128,9 +127,7 @@
         canvas.addEventListener('touchmove', function (event) {
             if (circleCatched) {
                 rect = canvas.getBoundingClientRect();
-                if (isMobile) {
-                    event = event.touches[0]
-                }
+                event = event.touches[0]
                 X = event.clientX - rect.left
                 Y = event.clientY - rect.top
 
